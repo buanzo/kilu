@@ -1,0 +1,62 @@
+basedir: kilu
+
+files:
+  - name: kilu.py
+    content: |
+      import yaml
+      import os
+      import sys
+      import base64
+
+      def write_base64_file(file_path, content_base64):
+          decoded_content = base64.b64decode(content_base64)
+          with open(file_path, "wb") as output_file:
+              output_file.write(decoded_content)
+
+      def is_safe_path(basedir, path):
+          return os.path.abspath(path).startswith(os.path.abspath(basedir))
+
+      if len(sys.argv) < 2:
+          print("Usage: python kilu.py <template_file>")
+          sys.exit(1)
+
+      template_file = sys.argv[1]
+
+      # Read the template from file
+      with open(template_file, "r") as f:
+          template = yaml.safe_load(f)
+
+      # Create the project directory if it doesn't exist
+      if not os.path.exists(template["basedir"]):
+          os.mkdir(template["basedir"])
+          print(f'Created {template["basedir"]}')
+
+      # Create the files and write the contents
+      for file in template["files"]:
+          fn = os.path.join(template["basedir"], file["name"])
+          if not is_safe_path(template["basedir"], fn):
+              print(f'Error: Skipping unsafe file path {fn}')
+              continue
+
+          if os.path.isabs(file["name"]):
+              print(f'Error: Skipping absolute file path {file["name"]}')
+              continue
+
+          if 'content_base64' in file:
+              write_base64_file(fn, file["content_base64"])
+          else:
+              with open(fn, "w") as f:
+                  f.write(file["content"])
+          print(f'Created {fn}')
+              
+  - name: kilu_prompt.txt
+    content: |
+      Kilu is a YAML-based template system that enables you to generate project files for any project that you indicate. The syntax of a Kilu template is as follows:
+
+      A basedir field specifies the base directory for the project. It should be a string value.
+
+      A files field contains a list of file entries. Each file entry should have a name and content field. The name field should be a string value that specifies the name of the file, and the content field should be a multiline string that defines the contents of the file. Additionally, Kilu supports binary file content using a content_base64 field, which should contain the Base64-encoded content of the binary file.
+
+  - name: version.txt
+    content: |
+      1.1
