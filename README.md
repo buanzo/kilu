@@ -18,6 +18,22 @@ A basedir field specifies the base directory for the project. It should be a str
 A files field contains a list of file entries. Each file entry should have a name and content field. The name field should be a string value that specifies the name of the file, and the content field should be a multiline string that defines the contents of the file. Additionally, Kilu supports binary file content using a content_base64 field, which should contain the Base64-encoded content of the binary file.
 ```
 
+## Installation
+
+To install kilu and dir2kilu (the packager), just run:
+
+```bash
+pip3 install kilu
+```
+
+To create a kilu template for your project, whilst ignoring .git folders within, use something like this:
+
+```bash
+dir2kilu /path/to/your/project /tmp/project.kilu
+```
+
+You can now paste the Kilu prompt to GPT, then the contents of project.kilu and gpt will be able to analyze, summarize, modify it, etc. You can also ask GPT to create a project for you based on your chat, and output it as a kilu template which you can save locally then unpack.
+
 ## Examples
 
 ### Basic Kilu Template
