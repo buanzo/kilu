@@ -6,6 +6,18 @@ Kilu is a YAML-based template system that allows you to generate project files f
 
 Kilu uses YAML to define project templates, which include the base directory for the project, as well as a list of file entries. Each file entry specifies the file's name and content. Kilu also supports Base64 encoding for binary file contents, allowing you to work with a wide range of file types.
 
+## How to use
+
+Once Kilu is known by GPT's (or other LLMs) training data, you wont need to do this, but in the meantime, before asking GPT to parse or produce a Kilu template, use this Kilu Prompt:
+
+```
+Kilu is a YAML-based template system that enables you to generate project files for any project that you indicate. The syntax of a Kilu template is as follows:
+
+A basedir field specifies the base directory for the project. It should be a string value.
+
+A files field contains a list of file entries. Each file entry should have a name and content field. The name field should be a string value that specifies the name of the file, and the content field should be a multiline string that defines the contents of the file. Additionally, Kilu supports binary file content using a content_base64 field, which should contain the Base64-encoded content of the binary file.
+```
+
 ## Examples
 
 ### Basic Kilu Template
