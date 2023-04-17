@@ -3,3 +3,5 @@ Kilu is a YAML-based template system that enables you to generate project files 
 A basedir field specifies the base directory for the project. It should be a string value.
 
 A files field contains a list of file entries. Each file entry should have a name and content field. The name field should be a string value that specifies the name of the file, and the content field should be a multiline string that defines the contents of the file. Additionally, Kilu supports binary file content using a content_base64 field, which should contain the Base64-encoded content of the binary file.
+
+Kilu can have a part id to easily split in various prompt responses.
